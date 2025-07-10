@@ -1,6 +1,6 @@
 name = "Ram"
 age = 32
-employee = True
+employee = False
 
 if employee == True:
     work_status = "working"
