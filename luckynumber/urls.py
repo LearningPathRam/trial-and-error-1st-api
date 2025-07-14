@@ -18,7 +18,11 @@ Including another URLconf
 
 from django.urls import path
 from .views import luckynumber
+from .views import luckynumber_form, result_page
 
 urlpatterns = [
+    path('', luckynumber_form, name='luckynumber_form'),
+    path('luckynumber/', result_page, name='result_page'),
+    # The following line is for direct access to the luckynumber function with a name parameter
     path('luckynumber/<str:name>/', luckynumber),
 ]
