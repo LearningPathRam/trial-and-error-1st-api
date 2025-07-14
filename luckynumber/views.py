@@ -1,5 +1,16 @@
 from django.http import JsonResponse
+from django.shortcuts import render
+from django.views.decorators.http import require_GET, require_POST
 
+@require_GET
+def luckynumber_form(request):
+    return render(request, "luckynumber/luckynumber_form.html")
+
+def result_page(request):
+    name = request.GET.get("name", "")
+    if not name:
+        return JsonResponse({"error": "Name is required."}, status=400)
+    return luckynumber(request, name)
 
 def luckynumber(request, name):
     def calculate_name_number(name: str) -> int:
