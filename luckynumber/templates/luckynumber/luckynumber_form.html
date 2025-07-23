@@ -3,13 +3,68 @@
 <head>
     <meta charset="UTF-8">
     <title>Generate Lucky Number</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f0f8ff;
+            color: #333;
+        }
+        h1 {
+            color: #0077cc;
+        }
+        label {
+            color: #009966;
+        }
+        #result {
+            margin-top: 30px;
+            padding: 20px;
+            border-radius: 10px;
+            background: #e6ffe6;
+            text-align: center;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        #lucky-number {
+            color: #ff6600;
+            font-size: 2em;
+            font-weight: bold;
+        }
+        #user-name {
+            color: #3366cc;
+            font-size: 1em;
+        }
+    </style>
 </head>
 <body>
     <h1>Enter Your Name to Get Your Lucky Number</h1>
-    <form action="/luckynumber" method="get">
+    <form id="lucky-form">
         <label for="name">Name:</label>
         <input type="text" id="name" name="name" placeholder="Enter your name" required>
         <button type="submit">Generate Lucky Number</button>
     </form>
+    <div id="result" style="display:none;">
+        <span id="user-name"></span>
+        <div>Your Lucky Number:</div>
+        <div id="lucky-number"></div>
+    </div>
+    <script>
+        document.getElementById('lucky-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const name = document.getElementById('name').value;
+            fetch(`/luckynumber?name=${encodeURIComponent(name)}`, {
+                headers: { 'Accept': 'application/json' }
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('result').style.display = 'block';
+                document.getElementById('user-name').textContent = `Hello, ${data.name}!`;
+                document.getElementById('lucky-number').textContent = data.lucky_number;
+            })
+            .catch(() => {
+                document.getElementById('result').style.display = 'block';
+                document.getElementById('user-name').textContent = '';
+                document.getElementById('lucky-number').textContent = 'Error fetching lucky number.';
+            });
+        });
+    </script>
 </body>
 </html>
