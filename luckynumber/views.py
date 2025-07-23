@@ -21,8 +21,11 @@ def luckynumber(request, name):
             total = sum(int(digit) for digit in str(total))
         return total
 
-    return JsonResponse(
-        {
-            "message": f"Hello, {name}! Your lucky number is {calculate_name_number(name)}."
-        }
-    )
+    # return JsonResponse(
+    #     {
+    #         "message": f"Hello, {name}! Your lucky number is {calculate_name_number(name)}."
+    #     }
+    #  )
+    return JsonResponse({'name': name, 'lucky_number': calculate_name_number(name)})
+
+   
